@@ -1,0 +1,258 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+/* === LAMP parameter-sweep widget === */
+.sweep-widget {
+  text-align: center;
+}
+.sweep-widget .sweep-img {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+}
+.sweep-widget .sweep-slider {
+  margin: 0.5rem 0 0.4rem;
+}
+.sweep-widget .sweep-bar {
+  position: relative;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  background: #eee;
+}
+.sweep-widget .sweep-zone {
+  flex: 1;
+}
+.sweep-widget .sweep-zone-extrap {
+  background: #ed5e5e;
+}
+.sweep-widget .sweep-zone-dataset {
+  background: #5dbb63;
+}
+.sweep-widget .sweep-indicator {
+  position: absolute;
+  top: -3px;
+  left: 0%;
+  width: 4px;
+  height: 16px;
+  background: #1f1f1f;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: left 0.18s linear;
+  box-shadow: 0 0 2px rgba(0,0,0,0.4);
+}
+.sweep-widget .sweep-value-num {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #222;
+}
+.sweep-widget .sweep-car-label {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.15rem;
+}
+.sweep-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 0.5rem 0 1.2rem;
+  font-size: 0.9rem;
+  color: #444;
+}
+.sweep-legend .swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+/* --- crop GIF/PNG text by hiding top/bottom of the 1024×1024 source --- */
+.sweep-widget .sweep-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 4;          /* shows middle 80% of a 1:1 source */
+  overflow: hidden;
+  border-radius: 6px;
+  background: #fff;
+}
+.sweep-widget .sweep-img-wrap .sweep-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  margin: 0;
+}
+.sweep-widget .sweep-img-wrap .sweep-slider {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  right: 10px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 5px 9px 4px;
+  border-radius: 6px;
+  z-index: 2;
+}
+.sweep-widget .sweep-img-wrap .sweep-value-num {
+  font-size: 0.82rem;
+}

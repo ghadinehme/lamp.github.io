@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="LAMP: Data-Efficient Linear Affine Weight-Space Models for Parameter-Controlled 3D Shape Generation and Extrapolation.">
+  <meta name="keywords" content="LAMP, SIREN, SDF, weight-space, parametric 3D, shape generation, extrapolation, DrivAerNet, BlendedNet, ICML 2026">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LAMP: Linear Affine Mixing of Parametric shapes</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/final-main-figure2.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/sweep_data.js"></script>
+  <script defer src="./static/js/sweep_widget.js"></script>
+</head>
+<body>
+
+
+<!-- HERO TITLE -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h1 class="title is-1 publication-title">
+        LAMP: Data-Efficient Linear Affine Weight-Space Models<br>
+        for Parameter-Controlled 3D Shape Generation and Extrapolation
+      </h1>
+      <h2 class="subtitle is-4">ICML 2026</h2>
+
+      <div class="is-size-5 publication-authors">
+        <span class="author-block">
+          <a href="https://www.linkedin.com/in/ghadi-nehme/" target="_blank" rel="noopener noreferrer">
+            Ghadi Nehme
+          </a><sup>1</sup>,
+        </span>
+        <span class="author-block">
+          <a href="https://www.linkedin.com/in/yanxiazhang/" target="_blank" rel="noopener noreferrer">
+            Yanxia Zhang
+          </a><sup>2</sup>,
+        </span>
+        <span class="author-block">
+          <a href="https://www.linkedin.com/in/dule-shu-71a4b6a6/" target="_blank" rel="noopener noreferrer">
+            Dule Shu
+          </a><sup>2</sup>,
+        </span>
+        <span class="author-block">
+          <a href="https://www.linkedin.com/in/matt-klenk-a7069b2/" target="_blank" rel="noopener noreferrer">
+            Matt Klenk
+          </a><sup>2</sup>,
+        </span>
+        <span class="author-block">
+          <a href="https://decode.mit.edu/" target="_blank" rel="noopener noreferrer">
+            Faez Ahmed
+          </a><sup>1</sup>
+        </span>
+      </div>
+
+      <div class="is-size-5 publication-authors">
+        <span class="author-block"><sup>1</sup>Massachusetts Institute of Technology &nbsp;&nbsp;</span>
+        <span class="author-block"><sup>2</sup>Toyota Research Institute</span>
+      </div>
+
+      <div class="column has-text-centered">
+        <div class="publication-links">
+          <span class="link-block">
+            <a href="https://arxiv.org/abs/2510.22491"
+                class="external-link button is-normal is-rounded is-dark">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Paper</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="https://arxiv.org/abs/2510.22491" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon"><i class="ai ai-arxiv"></i></span>
+              <span>arXiv</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="https://github.com/ghadinehme/LAMP"
+               class="external-link button is-normal is-rounded is-dark">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="https://www.youtube.com/watch?v=1C6KqY-3Okw"
+                class="external-link button is-normal is-rounded is-dark">
+              <span class="icon"><i class="fab fa-youtube"></i></span>
+              <span>Video</span>
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEASER -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body has-text-centered">
+      <div class="columns is-multiline is-mobile is-variable is-2"
+           style="margin-bottom: 0.4rem;">
+        <div class="column is-3 sweep-widget" data-car="C-HR"    data-param="H_Front_Bumper_Curvature">
+          <img class="sweep-img"><div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        </div>
+        <div class="column is-3 sweep-widget" data-car="Porsche" data-param="B_Ramp_Angle">
+          <img class="sweep-img"><div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        </div>
+        <div class="column is-3 sweep-widget" data-car="Supra"   data-param="A_Car_Roof_Height">
+          <img class="sweep-img"><div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        </div>
+        <div class="column is-3 sweep-widget" data-car="C-HR"    data-param="A_Car_Length">
+          <img class="sweep-img"><div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        </div>
+        <div class="column is-3 sweep-widget" data-car="Porsche" data-param="H_Front_Bumper_Curvature">
+          <img class="sweep-img"><div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        </div>
+        <div class="column is-3 sweep-widget" data-car="Supra"   data-param="B_Ramp_Angle">
+          <img class="sweep-img"><div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        </div>
+        <div class="column is-3 sweep-widget" data-car="C-HR"    data-param="A_Car_Roof_Height">
+          <img class="sweep-img"><div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        </div>
+        <div class="column is-3 sweep-widget" data-car="Supra"   data-param="A_Car_Length">
+          <img class="sweep-img"><div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        </div>
+      </div>
+      <h2 class="subtitle has-text-centered">
+        <strong>LAMP</strong> mixes per-shape SDF decoders in their aligned weight space
+        — yielding controllable, interpretable, and safely-extrapolated 3D geometries
+        from as few as 50 training samples.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- ABSTRACT -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Generating high-fidelity 3D geometries under explicit parameter constraints
+            is central to engineering design, yet current methods often require large
+            datasets and fail to provide reliable control beyond the training
+            distribution.
+          </p>
+          <p>
+            We introduce <strong>LAMP</strong> (<strong>L</strong>inear
+            <strong>A</strong>ffine <strong>M</strong>ixing of <strong>P</strong>arametric
+            shapes), a data-efficient framework for controllable and interpretable 3D
+            generation. LAMP aligns signed distance function (SDF) decoders by
+            overfitting each exemplar from a shared initialization, then generates new
+            designs by solving a <strong>parameter-constrained affine mixing problem in
+            the aligned weight space</strong>. To improve reliability, we propose a
+            <strong>linearity-mismatch safety metric</strong> that detects when mixed
+            decoders leave the valid local regime.
+          </p>
+          <p>
+            We evaluate LAMP on <strong>DrivAerNet++</strong>, <strong>BlendedNet</strong>,
+            and additional industry-level vehicle families, including sports cars, SUVs,
+            and convertibles. LAMP enables <strong>controlled interpolation with as few
+            as 50 samples</strong>, <strong>safe extrapolation up to 100% beyond
+            training ranges</strong>, and <strong>performance-guided optimization under
+            fixed parameters</strong>. It significantly outperforms conditional
+            autoencoder and Deep Network Interpolation (DNI) baselines in extrapolation,
+            data efficiency, and parameter fidelity. These results show that LAMP
+            supports <strong>low-data, parameter-driven design exploration</strong>
+            where fast geometry generation and reliable extrapolation are essential.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Video</h2>
+    <div class="publication-video"
+          style="position: relative; padding-bottom: 56.25%; height: 0;">
+      <iframe
+        src="https://www.youtube.com/embed/1C6KqY-3Okw?rel=0&showinfo=0"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0;
+                width: 100%; height: 100%; border-radius: 8px;">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Method</h2>
+    <img src="./static/images/final-main-figure2.png" alt="LAMP method overview"
+         style="max-width:100%; border-radius:8px; margin-bottom:1rem;">
+    <div class="content has-text-justified">
+      <p>
+        LAMP has three stages: <strong>(I) aligned SDF weight space construction</strong> —
+        a SIREN MLP is overfit to each exemplar mesh from a <em>shared anchor
+        initialization</em>, producing a per-shape weight vector that lives close to
+        all the others in parameter space. <strong>(II) parameter-constrained mixing</strong> —
+        a target parameter vector is matched by solving an SLSQP affine combination
+        problem in the aligned weight space; the resulting blend yields a synthetic
+        SIREN whose decoded SDF satisfies the target parameters. <strong>(III) mesh
+        extraction</strong> — marching cubes on the blended SDF field gives an
+        editable surface mesh, which can be further constrained by symmetry and
+        domain-specific decode grids.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PARAMETER SWEEP EXTRAPOLATION -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Parameter Sweep Extrapolation</h2>
+    <p style="margin-bottom: 0.4rem;">
+      Trained on <strong>50 samples</strong> per vehicle style, swept with
+      <strong>±100% extrapolation</strong> beyond the dataset range.
+    </p>
+    <div class="sweep-legend">
+      <span><span class="swatch" style="background:#5dbb63;"></span>Dataset range</span>
+      <span><span class="swatch" style="background:#ed5e5e;"></span>Extrapolation</span>
+    </div>
+
+    <div class="content">
+      <h4 class="title is-5" style="margin-top:1.5rem;">Front bumper curvature</h4>
+      <div class="columns is-centered">
+        <div class="column sweep-widget" data-car="C-HR" data-param="H_Front_Bumper_Curvature">
+          <img class="sweep-img" alt="C-HR Front Bumper Curvature sweep">
+          <div class="sweep-slider">
+            <div class="sweep-bar">
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-zone sweep-zone-dataset"></div>
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-indicator"></div>
+            </div>
+            <div class="sweep-value-num"></div>
+          </div>
+          <p class="sweep-car-label"><strong>C-HR</strong></p>
+        </div>
+        <div class="column sweep-widget" data-car="Porsche" data-param="H_Front_Bumper_Curvature">
+          <img class="sweep-img" alt="Porsche Front Bumper Curvature sweep">
+          <div class="sweep-slider">
+            <div class="sweep-bar">
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-zone sweep-zone-dataset"></div>
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-indicator"></div>
+            </div>
+            <div class="sweep-value-num"></div>
+          </div>
+          <p class="sweep-car-label"><strong>Porsche</strong></p>
+        </div>
+        <div class="column sweep-widget" data-car="Supra" data-param="H_Front_Bumper_Curvature">
+          <img class="sweep-img" alt="Supra Front Bumper Curvature sweep">
+          <div class="sweep-slider">
+            <div class="sweep-bar">
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-zone sweep-zone-dataset"></div>
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-indicator"></div>
+            </div>
+            <div class="sweep-value-num"></div>
+          </div>
+          <p class="sweep-car-label"><strong>Supra</strong></p>
+        </div>
+      </div>
+
+      <h4 class="title is-5" style="margin-top:1.5rem;">Ramp angle</h4>
+      <div class="columns is-centered">
+        <div class="column sweep-widget" data-car="C-HR" data-param="B_Ramp_Angle">
+          <img class="sweep-img" alt="C-HR Ramp Angle sweep">
+          <div class="sweep-slider">
+            <div class="sweep-bar">
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-zone sweep-zone-dataset"></div>
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-indicator"></div>
+            </div>
+            <div class="sweep-value-num"></div>
+          </div>
+          <p class="sweep-car-label"><strong>C-HR</strong></p>
+        </div>
+        <div class="column sweep-widget" data-car="Porsche" data-param="B_Ramp_Angle">
+          <img class="sweep-img" alt="Porsche Ramp Angle sweep">
+          <div class="sweep-slider">
+            <div class="sweep-bar">
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-zone sweep-zone-dataset"></div>
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-indicator"></div>
+            </div>
+            <div class="sweep-value-num"></div>
+          </div>
+          <p class="sweep-car-label"><strong>Porsche</strong></p>
+        </div>
+        <div class="column sweep-widget" data-car="Supra" data-param="B_Ramp_Angle">
+          <img class="sweep-img" alt="Supra Ramp Angle sweep">
+          <div class="sweep-slider">
+            <div class="sweep-bar">
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-zone sweep-zone-dataset"></div>
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-indicator"></div>
+            </div>
+            <div class="sweep-value-num"></div>
+          </div>
+          <p class="sweep-car-label"><strong>Supra</strong></p>
+        </div>
+      </div>
+
+      <h4 class="title is-5" style="margin-top:1.5rem;">Car roof height</h4>
+      <div class="columns is-centered">
+        <div class="column sweep-widget" data-car="C-HR" data-param="A_Car_Roof_Height">
+          <img class="sweep-img" alt="C-HR Car Roof Height sweep">
+          <div class="sweep-slider">
+            <div class="sweep-bar">
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-zone sweep-zone-dataset"></div>
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-indicator"></div>
+            </div>
+            <div class="sweep-value-num"></div>
+          </div>
+          <p class="sweep-car-label"><strong>C-HR</strong></p>
+        </div>
+        <div class="column sweep-widget" data-car="Porsche" data-param="A_Car_Roof_Height">
+          <img class="sweep-img" alt="Porsche Car Roof Height sweep">
+          <div class="sweep-slider">
+            <div class="sweep-bar">
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-zone sweep-zone-dataset"></div>
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-indicator"></div>
+            </div>
+            <div class="sweep-value-num"></div>
+          </div>
+          <p class="sweep-car-label"><strong>Porsche</strong></p>
+        </div>
+        <div class="column sweep-widget" data-car="Supra" data-param="A_Car_Roof_Height">
+          <img class="sweep-img" alt="Supra Car Roof Height sweep">
+          <div class="sweep-slider">
+            <div class="sweep-bar">
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-zone sweep-zone-dataset"></div>
+              <div class="sweep-zone sweep-zone-extrap"></div>
+              <div class="sweep-indicator"></div>
+            </div>
+            <div class="sweep-value-num"></div>
+          </div>
+          <p class="sweep-car-label"><strong>Supra</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MULTIVIEW for one parameter -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Multi-View Inspection</h2>
+    <p style="margin-bottom: 1.2rem;">
+      The same <em>Greenhouse Angle</em> sweep on the C-HR mesh, viewed from
+      three orthogonal cameras to highlight LAMP's structural consistency.
+    </p>
+    <div class="columns is-centered">
+      <div class="column sweep-widget" data-car="C-HR" data-param="A_Car_Green_House_Angle">
+        <img class="sweep-img" alt="C-HR greenhouse 3/4">
+        <div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        <p class="sweep-car-label"><strong>3/4 view</strong></p>
+      </div>
+      <div class="column sweep-widget" data-car="C-HR" data-param="A_Car_Green_House_Angle" data-view="_front">
+        <img class="sweep-img" alt="C-HR greenhouse front">
+        <div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        <p class="sweep-car-label"><strong>Front</strong></p>
+      </div>
+      <div class="column sweep-widget" data-car="C-HR" data-param="A_Car_Green_House_Angle" data-view="_side">
+        <img class="sweep-img" alt="C-HR greenhouse side">
+        <div class="sweep-slider"><div class="sweep-bar"><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-zone sweep-zone-dataset"></div><div class="sweep-zone sweep-zone-extrap"></div><div class="sweep-indicator"></div></div><div class="sweep-value-num"></div></div>
+        <p class="sweep-car-label"><strong>Side</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DRAG OPTIMIZATION -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Physics-Guided Drag Optimization</h2>
+    <img src="./static/images/cd_decay.png" alt="Drag-optimized shapes"
+         style="max-width:100%; border-radius:8px; margin-bottom:1rem;">
+    <div class="content has-text-justified">
+      <p>
+        Performance-driven optimization on DrivAerNet++. <strong>Left</strong>:
+        target vs. predicted drag reduction for LAMP, DNI, and AE-LPA.
+        <strong>Right</strong>: error heatmaps relative to the reference mesh. LAMP
+        achieves accurate prediction and a physically interpretable modification (a
+        flattened windscreen), while DNI and AE-LPA fail to produce aerodynamically
+        meaningful changes.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Safety Metric</h2>
+    <img src="./static/images/safety-metric.png" alt="Safety metric"
+         style="max-width:100%; border-radius:8px; margin-bottom:1rem;">
+    <div class="content has-text-justified">
+      <p>
+        LAMP's <strong>linearity-mismatch safety metric</strong> detects when an
+        extrapolated parameter request has left the regime where the affine
+        weight-space mixing remains valid. Geometries above the threshold are
+        flagged, giving the designer an interpretable veto on visually degenerate
+        outputs.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- BIBTEX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{nehme2025lamp,
+  title={LAMP: Data-Efficient Linear Affine Weight-Space Models for Parameter-Controlled 3D Shape Generation and Extrapolation},
+  author={Nehme, Ghadi and Zhang, Yanxia and Shu, Dule and Klenk, Matt and Ahmed, Faez},
+  journal={arXiv preprint arXiv:2510.22491},
+  year={2025}
+}</code></pre>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://arxiv.org/abs/2510.22491"><i class="fas fa-file-pdf"></i></a>
+      <a class="icon-link" href="https://github.com/ghadinehme/LAMP"><i class="fab fa-github"></i></a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            Website adapted from the <a href="https://nerfies.github.io">Nerfies</a> template.
+            © 2026 MIT DeCoDE Lab.
+          </p>
+          <p>
+            Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
