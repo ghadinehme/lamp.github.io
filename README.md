@@ -22,8 +22,3 @@ lamp.github.io/
     └── gifs/{C-HR,Porsche,Supra}/
                      # weight-space sweep animations
 ```
-
-## YouTube placeholder
-The video block embeds `1C6KqY-3Okw` (the CADFit demo). Replace with the LAMP
-video ID in `index.html` at the `<iframe src=...>` line and the matching `Video`
-button link.
